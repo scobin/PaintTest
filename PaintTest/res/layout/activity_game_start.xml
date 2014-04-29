@@ -42,9 +42,8 @@
         android:layout_alignBaseline="@+id/eTAnswer"
         android:layout_alignBottom="@+id/eTAnswer"
         android:layout_alignLeft="@+id/frame"
-        android:background="@drawable/shape"
-        android:text="答え："
-        android:textSize="16sp" />
+        android:text="答え:"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView1"

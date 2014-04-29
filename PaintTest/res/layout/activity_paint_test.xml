@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bc_start"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,67 +11,80 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PaintTest" >
 
+    <ImageView
+        android:id="@+id/img_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/paint_together_150" />
+
     <RadioGroup
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp" >
+        android:layout_above="@+id/img_title"
+        android:layout_alignRight="@+id/img_title"
+        android:layout_marginBottom="39dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
         <RadioButton
             android:id="@+id/radio0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="5人（描く人数4人、当てる人数1人）" />
+            android:text="5人" />
 
         <RadioButton
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4人（描く人数3人、当てる人数1人）" />
+            android:text="4人" />
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3人（描く人数2人、当てる人数1人）" />
+            android:text="3人" />
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txt_playerNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/radioGroup1"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
-        android:text="プレーヤー人数" />
-
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
-        android:text="開始" />
+        android:layout_above="@+id/radioGroup1"
+        android:layout_alignLeft="@+id/img_title"
+        android:text="プレーヤー人数"
+        android:visibility="gone" />
 
     <CheckBox
         android:id="@+id/checkBCstQst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/radioGroup1"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="設定した問題を利用する" />
+        android:text="設定した問題を利用する"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="開始"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btnAddQuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/checkBCstQst"
-        android:layout_below="@+id/checkBCstQst"
-        android:text="題目設定" />
+        android:layout_alignTop="@+id/img_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
+        android:text="題目設定"
+        android:visibility="gone" />
 
 </RelativeLayout>

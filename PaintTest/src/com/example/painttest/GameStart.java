@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class GameStart extends Activity {
+public class GameStart extends Activity implements OnClickListener{
 	private FrameLayout frame;
 	private ProgressDialog pd;
 	private TextView textSubject,textAnswer;
@@ -44,79 +44,88 @@ public class GameStart extends Activity {
 		eTAnswer=(EditText)findViewById(R.id.eTAnswer);
 		btnAnsOK=(Button)findViewById(R.id.btnAnsOK);
 		//-------------------------
-		final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		//final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		timeProgress=(ProgressBar)findViewById(R.id.timeProgress);
 		timeProgress.setIndeterminate(false);
 		paintView=new PaintView(this);
 		frame.addView(paintView);
-		btnAnsOK.setOnClickListener(new OnClickListener(){
-	    
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(imm.isActive()){
-
-					imm.hideSoftInputFromWindow(eTAnswer.getWindowToken(), 0);
-				}
-				//To check the answer is right or wrong.
-				AlertDialog.Builder ad=new AlertDialog.Builder(GameStart.this);
-				ad.setCancelable(true);
-				String userAns=eTAnswer.getText().toString();
-				Log.d("test", userAns);
-				if(Answer.equals(userAns)){
-					//Answer is right
-					
-					ad.setTitle("正解");
-					ad.setMessage("お見事ですね！もう一回遊びますか？");
-					ad.setPositiveButton("はい", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							// reset and play again
-							
-							frame.removeAllViews();
-							paintView=new PaintView(getBaseContext());
-							frame.addView(paintView);
-							paintView.penCount=0;
-							paintView.isDrawing=1;
-							subjectPrepare();
-						}
-					});
-					ad.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							// Do not play 
-							finish();
-						}
-					});
-					ad.show();
-				}
-				else{
-					//Answer is wrong
-					ad.setTitle("残念");
-					ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							
-						}
-					});
-					ad.show();
-				}
-				eTAnswer.setText("");
-			}
-			
-		});
+		btnAnsOK.setOnClickListener(this);
 		
 		subjectPrepare();
 
 		
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.game_start, menu);
+		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		btnAnsOK.setOnClickListener(null);
+		running=false;
+		super.onDestroy();
+	}
+	
+	@Override
+	public void onClick(View v) {
+		final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(imm.isActive()){
+
+			imm.hideSoftInputFromWindow(eTAnswer.getWindowToken(), 0);
+		}
+		//To check the answer is right or wrong.
+		AlertDialog.Builder ad=new AlertDialog.Builder(GameStart.this);
+		ad.setCancelable(true);
+		String userAns=eTAnswer.getText().toString();
+		if(Answer.equals(userAns)){
+			//Answer is right
+			ad.setTitle("正解");
+			ad.setMessage("お見事ですね！もう一回遊びますか？");
+			ad.setPositiveButton("はい", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// reset and play again
+					frame.removeAllViews();
+					paintView=new PaintView(getBaseContext());
+					frame.addView(paintView);
+					paintView.penCount=0;
+					paintView.isDrawing=1;
+					subjectPrepare();
+				}
+			});
+			ad.setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// Do not play 
+					finish();
+				}
+			});
+			ad.show();
+		}
+		else{
+			//Answer is wrong
+			ad.setTitle("残念");
+			ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			ad.show();
+		}
+		eTAnswer.setText("");
+		
+	}
+	
 	void subjectPrepare(){
 		
 		//繪畫過程中回答畫面消失
@@ -254,24 +263,6 @@ public class GameStart extends Activity {
 		}
 	};
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.game_start, menu);
-		return true;
-	}
-
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		
-		Log.d("thd", "GameStart is destroyed"); 
-		running=false;
-		Log.d("thd", "running= "+Boolean.toString(running));
-		//mThread.interrupt();
-		//mThread=null;
-		super.onDestroy();
-	}
     
 	public void playerChangeDialog(){
 		
@@ -292,4 +283,5 @@ public class GameStart extends Activity {
 		ad.setCancelable(false);
 		ad.show();
 	}
+
 }

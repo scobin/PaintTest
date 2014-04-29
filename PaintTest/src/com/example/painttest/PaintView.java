@@ -36,6 +36,7 @@ public class PaintView extends SurfaceView
 	private float recx=0,recy=0;
 	public int penCount=0;
 	public int isDrawing=1;
+	
 	public PaintView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -44,7 +45,7 @@ public class PaintView extends SurfaceView
 		this.setLongClickable(true); //It's important to detect the gesture.
 		//設置背景
 		
-		this.setBackgroundResource(R.drawable.bc_frame);
+		//this.setBackgroundResource(R.drawable.bc_frame);
 		this.setZOrderOnTop(true);
 		this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		
@@ -94,8 +95,6 @@ public class PaintView extends SurfaceView
 			if(penCount<(GameConstant.playerNum-1)){
 				switch(me.getAction()){
 				case MotionEvent.ACTION_DOWN:
-					Log.d("test", "Action Down");
-					Log.d("test", ":(posx,posy)=("+posx+ ", "+posy+")");
 					canvas=sfh.lockCanvas(new Rect((int)posx,(int)posy,
 							(int)posx+2,(int)posy+2));
 					
@@ -106,9 +105,6 @@ public class PaintView extends SurfaceView
 					recy=posy;
 					break;
 				case MotionEvent.ACTION_MOVE:
-					Log.d("test", "Action Move");
-					Log.d("test", ":(recx,recy)=("+recx+ ", "+recy+")");
-					Log.d("test", ":(posx,posy)=("+posx+ ", "+posy+")");
 					//if the distance of moving satisfies the cond. of draw line 
 					if((Math.abs(recx-posx)+Math.abs(recy-posy))>=0 ){
 						if(recx>posx){
