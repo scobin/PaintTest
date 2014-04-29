@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="PlayerNumArray">
+        <item>5人(描く：四人、当てる：1人)</item>
+        <item>4人(描く：三人、当てる：1人)</item>
+        <item>3人(描く：二人、当てる：1人)</item>
+    </string-array>
+    <string-array name="PlayerNumValues">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>  
+    </string-array>
+</resources>

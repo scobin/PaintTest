@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".PaintTest" >
+
+    <TextView
+        android:id="@+id/textSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/shape"
+        android:text="@string/subject"
+        android:textColor="@color/lightgreen"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/timeProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/frame"
+        android:layout_alignTop="@+id/textSubject"
+        android:background="@drawable/shape"
+        android:maxHeight="30dp"
+        android:maxWidth="100dp"
+        android:minHeight="20dp"
+        android:minWidth="100dp"
+        android:progressDrawable="@android:drawable/progress_horizontal" />
+
+    <TextView
+        android:id="@+id/textAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/eTAnswer"
+        android:layout_alignBottom="@+id/eTAnswer"
+        android:layout_alignLeft="@+id/frame"
+        android:background="@drawable/shape"
+        android:text="答え："
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/timeProgress"
+        android:layout_marginRight="16dp"
+        android:text="時間"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/eTAnswer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/textSubject" >
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnAnsOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/eTAnswer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/shape"
+        android:text="確認"
+        android:textSize="28sp" />
+
+    <EditText
+        android:id="@+id/eTAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/frame"
+        android:layout_toRightOf="@+id/textSubject"
+        android:background="@drawable/shape"
+        android:ems="10"
+        android:textSize="30sp" />
+
+</RelativeLayout>
