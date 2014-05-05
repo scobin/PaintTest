@@ -1,5 +1,5 @@
 /**
- * ゲーム設定画面
+ * ゲーム起動画面
  */
 package com.example.painttest;
 
