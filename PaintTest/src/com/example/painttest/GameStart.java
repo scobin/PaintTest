@@ -39,6 +39,7 @@ public class GameStart extends Activity implements OnClickListener{
 	private String Answer;
 	private Thread mThread;
 	private boolean running;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

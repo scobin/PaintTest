@@ -17,6 +17,7 @@ public class CustomizeQuest extends Activity {
 	private EditText editTQ1,editTQ2,editTQ3;
 	private Button btnCstQstAddOk, btnCstQstEnd;
 	private TextView textViewQuestNum;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
