@@ -1,3 +1,6 @@
+/**
+ * 描く画面を制御するビュー
+ */
 package com.example.painttest;
 
 import android.app.AlertDialog;
@@ -28,7 +31,6 @@ import android.widget.TextView;
 public class PaintView extends SurfaceView 
 	implements SurfaceHolder.Callback{
 
-	
 	private SurfaceHolder sfh;
 	private Canvas canvas;
 	private Paint paintx=new Paint();
@@ -39,49 +41,17 @@ public class PaintView extends SurfaceView
 	
 	public PaintView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 		sfh=getHolder();
 		sfh.addCallback(this);
 		this.setLongClickable(true); //It's important to detect the gesture.
-		//設置背景
-		
-		//this.setBackgroundResource(R.drawable.bc_frame);
+		//背景設定
 		this.setZOrderOnTop(true);
 		this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		
 	}
-	@Override
-	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		Log.d("test", "surfaceChanged");
-		
-		//canvas=sfh.lockCanvas();
-		
-		//canvas.drawColor(Color.WHITE);
-		//sfh.unlockCanvasAndPost(canvas);
-		
-	}
-	@Override
-	public void surfaceCreated(SurfaceHolder arg0) {
-		// TODO Auto-generated method stub
-		Log.d("test", "surfaceCreated");
-		
-		//canvas=sfh.lockCanvas();
-		//canvas.drawColor(Color.WHITE);
-		//sfh.unlockCanvasAndPost(canvas);
-		
-	}
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		Log.d("test", "surfaceDestroyed");
-		
-	}
-
 		
 	@Override
 	public boolean onTouchEvent(MotionEvent me) {
-		// TODO Auto-generated method stub
 		float posx,posy,left,right,top,bottom;
 		posx=me.getX();
 		posy=me.getY();
@@ -89,9 +59,9 @@ public class PaintView extends SurfaceView
 		paintx.setColor(Color.RED);
 		paintx.setStrokeWidth(3);
 		paintx.setAntiAlias(true);
-		//事件觸發後判斷是否可以劃線
+		//描くのは可能かどうかを判断する
 		if(isDrawing==1){
-			//當可以劃線時判斷手勢
+			//ジェスチャーの判断
 			if(penCount<(GameConstant.playerNum-1)){
 				switch(me.getAction()){
 				case MotionEvent.ACTION_DOWN:
@@ -123,70 +93,58 @@ public class PaintView extends SurfaceView
 							top=recy;
 							bottom=posy+2;
 						}
-
-						
-						
 						canvas=sfh.lockCanvas(new Rect((int)left,(int)top,(int)right,(int)bottom));
-						
 						canvas.drawLine(recx, recy, posx, posy, paintx);
 						//show the line
 						sfh.unlockCanvasAndPost(canvas);
-					    //update recx,recy
-						
 						recx=posx;
 						recy=posy;
 					}	
 				
 					break;
 				case MotionEvent.ACTION_UP:
-					Log.d("test", "Action Up");
-					
 					penCount++;
 					isDrawing=0;
-					
 					break;
-				
+				default:
+					break;
 				}
-			}
-			else{
-				
 			}
 		}
 		
 		return super.onTouchEvent(me);
 	}
+	
+	/**
+	 * ビューのクリアー
+	 */
 	public void clearView(){
 		canvas=sfh.lockCanvas();
-		//this.setZOrderOnTop(false);
 		canvas.drawColor(Color.WHITE);
 		
 		//show the line
 		sfh.unlockCanvasAndPost(canvas);
-		//this.setBackgroundResource(R.drawable.bc_frame);
 		this.setZOrderOnTop(true);
-		//this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		penCount=0;
 	}
-	public void playerChangeDialog(){
-		FrameLayout fl=(FrameLayout)this.getParent();
-		RelativeLayout rl=(RelativeLayout)fl.getParent();
-		textSubject=(TextView)rl.findViewById(R.id.textSubject);
-		final String subject=textSubject.getText().toString();
-		textSubject.setText(R.string.subject);
-		AlertDialog.Builder ad=new AlertDialog.Builder(getContext());
-		ad.setTitle("プレーヤー変換");
-		ad.setMessage("劃数合計："+Integer.toString(penCount));
-		ad.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		// 何もしない
 		
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				textSubject.setText(subject);
-				isDrawing=1;
-			}
-		});
-		ad.setCancelable(false);
-		ad.show();
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+		// 何もしない
+		
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// 何もしない
+		
 	}
 }
 	

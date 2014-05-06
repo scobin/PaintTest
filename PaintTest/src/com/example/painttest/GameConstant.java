@@ -1,3 +1,6 @@
+/**
+ * 共通変数、関数
+ */
 package com.example.painttest;
 
 import java.util.ArrayList;

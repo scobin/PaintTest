@@ -1,9 +1,13 @@
+/**
+ * テーマを作成する画面
+ */
 package com.example.painttest;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +20,10 @@ public class CustomizeQuest extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_customize_quest);
+		
 		editTQ1=(EditText)findViewById(R.id.editTQ1);
 		editTQ2=(EditText)findViewById(R.id.editTQ2);
 		editTQ3=(EditText)findViewById(R.id.editTQ3);
@@ -27,8 +34,6 @@ public class CustomizeQuest extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
 				if("".equals(editTQ1.getText().toString()) != true){
 					GameConstant.customquestlist.add(editTQ1.getText().toString());
 				}
@@ -53,18 +58,11 @@ public class CustomizeQuest extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				finish();
 			}
 			
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_customize_quest, menu);
-		return true;
-	}
 
 }

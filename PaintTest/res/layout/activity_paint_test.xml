@@ -11,80 +11,92 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PaintTest" >
 
-    <ImageView
-        android:id="@+id/img_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ViewSwitcher
+        android:id="@+id/vSContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/paint_together_150" />
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dp" >
 
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/img_title"
-        android:layout_alignRight="@+id/img_title"
-        android:layout_marginBottom="39dp"
-        android:orientation="horizontal"
-        android:visibility="gone" >
-
-        <RadioButton
-            android:id="@+id/radio0"
+        <ImageView
+            android:id="@+id/img_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="5人" />
+            android:layout_gravity="center"
+            android:src="@drawable/paint_together_150" />
 
-        <RadioButton
-            android:id="@+id/radio1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4人" />
+            android:layout_gravity="center"
+            android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/radio2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3人" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/txt_playerNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="プレーヤー人数"
+                android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/txt_playerNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/radioGroup1"
-        android:layout_alignLeft="@+id/img_title"
-        android:text="プレーヤー人数"
-        android:visibility="gone" />
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:visibility="visible" >
 
-    <CheckBox
-        android:id="@+id/checkBCstQst"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="設定した問題を利用する"
-        android:visibility="gone" />
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="5人" />
 
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/img_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:text="開始"
-        android:visibility="gone" />
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4人" />
 
-    <Button
-        android:id="@+id/btnAddQuest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/img_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        android:text="題目設定"
-        android:visibility="gone" />
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3人" />
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/checkBCstQst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="設定した問題を利用する"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnAddQuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="題目設定"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="開始"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </ViewSwitcher>
 
 </RelativeLayout>

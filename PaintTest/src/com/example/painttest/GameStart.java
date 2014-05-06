@@ -1,3 +1,7 @@
+/**
+ * ゲームの進行画面
+ * 
+ */
 package com.example.painttest;
 
 import android.annotation.SuppressLint;
@@ -13,6 +17,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -36,6 +42,8 @@ public class GameStart extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_game_start);
 		frame=(FrameLayout)findViewById(R.id.frame);
 		textSubject=(TextView)findViewById(R.id.textSubject);
@@ -50,22 +58,14 @@ public class GameStart extends Activity implements OnClickListener{
 		paintView=new PaintView(this);
 		frame.addView(paintView);
 		btnAnsOK.setOnClickListener(this);
-		
+		//テーマの表示
 		subjectPrepare();
 
 		
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.game_start, menu);
-		return true;
-	}
-
-	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		btnAnsOK.setOnClickListener(null);
 		running=false;
 		super.onDestroy();
@@ -126,13 +126,15 @@ public class GameStart extends Activity implements OnClickListener{
 		
 	}
 	
+	/**
+	 * テーマの表示して、ゲームを進行する。
+	 */
 	void subjectPrepare(){
-		
-		//繪畫過程中回答畫面消失
+		//回答画面を設定(画面を消す)
 		textAnswer.setVisibility(View.GONE);
 		btnAnsOK.setVisibility(View.GONE);
 		eTAnswer.setVisibility(View.GONE);
-		//設定題目類型是預設問題或是自定問題
+		//テーマのタイプの確認
 		if(GameConstant.questKind=="CustomQuest"){
 			Answer=GameConstant.customquestlist.get((int)(Math.random() * 
 					GameConstant.customquestlist.size()));
@@ -140,10 +142,9 @@ public class GameStart extends Activity implements OnClickListener{
 		else{
 			Answer=GameConstant.question[(int)(Math.random() * GameConstant.question.length)];
 		}
-		//
+		//秒読みダイアロック
 		pd = new ProgressDialog(this);
 		pd.setTitle("秒読み--3秒前");
-		//pd.setMessage("");
 		pd.setIndeterminate(true);
 		pd.setCancelable(true);
 		pd.show();
@@ -163,17 +164,17 @@ public class GameStart extends Activity implements OnClickListener{
 				    		  e.printStackTrace();
 				    	  }
 				      } 
-				     // The time for preparing is over.Dismiss the dialog
+				     //秒読みダイアロックを消すメッセージ設定
 				      message = handler.obtainMessage(1,"over");
 		    		  handler.sendMessage(message);
-		    		 // Game start and show the time bar.
+		    		 //ゲームスタート。描く時間をカウントする。
 		    		 while(paintView.penCount<(GameConstant.playerNum-1)){
 		    			 if(paintView.isDrawing==1){
 			    			  for(int i=0;i<100;i++){
 				    			  try{
 				    				  Thread.sleep(GameConstant.drawTime/100);
 				    				  if(i==99){
-				    					  //畫圖時間到,對paintView控制,修改筆畫數and Drawing state.
+				    					  //タイムアウト
 				    					  paintView.isDrawing=0;
 				    					  paintView.penCount++;
 					    				  message=handler.obtainMessage(i,"timeout");
@@ -181,17 +182,16 @@ public class GameStart extends Activity implements OnClickListener{
 					    				  
 					    			  }
 					    			  else{
-					    				 //畫圖時間未到 
-					    				  //確認是否已經劃線，若劃線完畢時間軸停止，並顯示換玩家對話框，若尚未劃完則繼續時間倒數
+					    				  //
 					  		        	  if(paintView.isDrawing==0){
-					  		        		  //劃線完畢
-					  		        		  i=99;//跳出for迴圈，讓時間倒數結束
+					  		        		  //描きを完了
+					  		        		  i=99;//タイムアウトのように設定する
 					  		        		message=handler.obtainMessage(i,"timeout");
 					  		        		handler.sendMessage(message);
 					  		        		  
 					  		        	  }
 					  		        	  else{
-					  		        		  //尚未劃線或劃線中
+					  		        		  //描き中
 					  		        		   message=handler.obtainMessage(i,"timerun");
 					  		        		   handler.sendMessage(message);
 					  		        	  }
@@ -203,11 +203,10 @@ public class GameStart extends Activity implements OnClickListener{
 				    		  }
 			    		  }
 		    		 }
-		    		 Log.d("thd", "thread is over");
 		    		 running=false;
-				}
+				}//WhileEnd
 			       
-			}
+			}//RunEnd
 			
 		});
 			 
@@ -230,20 +229,15 @@ public class GameStart extends Activity implements OnClickListener{
 		        	pd.dismiss();
 		        	textSubject.setText(getString(R.string.subject)+Answer);
 		        }
-		        //Edit the progress bar in the process of playing game.
 		        
 		        if(MsgString=="timerun"){
 		        	timeProgress.setVisibility(View.VISIBLE);
-		        	timeProgress.setProgress(msg.what);
-		        	//check the drawing is done or not.If done, let timeProgress disappear.
-		        	
+		        	timeProgress.setProgress(msg.what);      	
 		        		
 		        }
 		        if(MsgString=="timeout"){
 		            timeProgress.setProgress(0);
-		            //timeProgress.setVisibility(View.GONE);
-		        	//出現dialog表示換玩家or guess
-  				    paintView.isDrawing=0;
+		        	paintView.isDrawing=0;
   				    
   				    if(paintView.penCount==(GameConstant.playerNum-1)){
   					    //当てる時間
@@ -254,7 +248,6 @@ public class GameStart extends Activity implements OnClickListener{
   				    }
   				    else{
   					   //プレーヤー変換、ダイやログの表示 
-  				    	//paintView.playerChangeDialog();
   				    	playerChangeDialog();
   				    }
 		        	
@@ -263,9 +256,10 @@ public class GameStart extends Activity implements OnClickListener{
 		}
 	};
 	
-    
+	/**
+	 * プレーヤー変換のダイアロック
+	 */
 	public void playerChangeDialog(){
-		
 		final String subject=textSubject.getText().toString();
 		textSubject.setText(R.string.subject);
 		AlertDialog.Builder ad=new AlertDialog.Builder(this);
@@ -275,7 +269,6 @@ public class GameStart extends Activity implements OnClickListener{
 		
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				textSubject.setText(subject);
 				paintView.isDrawing=1;
 			}
